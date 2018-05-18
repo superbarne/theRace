@@ -1,0 +1,23 @@
+{
+  "name": "therace",
+  "version": "1.0.0",
+  "description": "theRace ist ein Geschicklichkeitsspiel, das in einem Browser ausgeführt wird. Ziel ist es, ein Fahrzeug möglichst schnell durch einen Parcours zu manövrieren. Das Spiel kann allein oder auch zu zweit gespielt werden. Die Fahrzeuge können mit der Tastatur oder mit per Websocket-Broadcast verbundenen Smartphones oder Tablets gesteuert werden.",
+  "main": "index.js",
+  "scripts": {
+    "start": "browser-sync start --watch src/* --server src/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superbarne/theRace.git"
+  },
+  "author": "Barne Jürgensen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/superbarne/theRace/issues"
+  },
+  "homepage": "https://github.com/superbarne/theRace#readme",
+  "dependencies": {
+    "browser-sync": "^2.24.4"
+  }
+}
