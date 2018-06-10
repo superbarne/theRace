@@ -20,6 +20,7 @@ export class KeyboardControl {
       setControl(e.which, false)
       if (e.which === 67) entity.placeBarrel()
       if (e.which === 88) entity.placeBarricade()
+      if (e.which === 80) entity.game.level.polylines.unshift([entity.x, entity.y])
     })
 
     this.socket = new Socket()

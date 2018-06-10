@@ -6,6 +6,8 @@ export class Entity {
     this.y = y
     this.angle = angle
     this.game = game
+    this.collisionMap = []
+    this.colides = false
   }
   render ({ viewport, ctx }) {
     ctx.save()

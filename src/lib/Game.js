@@ -2,6 +2,7 @@ import { EntityCar } from './EntityCar.js'
 import { Map } from './Map.js'
 import { KeyboardControl } from './KeyboardControl.js'
 import { Socket } from './Socket.js'
+import { Level } from './Level.js'
 
 export class Game extends window.HTMLElement {
   constructor () {
@@ -13,6 +14,7 @@ export class Game extends window.HTMLElement {
     this.canvas.setAttribute('height', this.height)
     this.ctx = this.canvas.getContext('2d', { alpha: true }) // apha false for litte performance boost
     this.socket = new Socket()
+    this.level = new Level(this)
 
     this.socket.on('info', () => console.log(this.socket))
 
@@ -60,11 +62,13 @@ export class Game extends window.HTMLElement {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
     this.map.render(this)
     this.entities.forEach(entity => entity.render(this))
+    this.level.render(this)
     window.requestAnimationFrame(() => this.render())
   }
 
   udpate () {
     const { viewport, followEntity, canvas, map, entities, controls } = this
+
     const boundries = (n, lo, hi) => n < lo ? lo : n > hi ? hi : n
     viewport.x = boundries(
       -followEntity.x + this.width / 2,
@@ -74,6 +78,6 @@ export class Game extends window.HTMLElement {
       -followEntity.y + this.height / 2,
       canvas.height - map.height, 0
     );
-    [ ...entities, ...controls ].forEach(item => item.update(this))
+    [ ...entities, ...controls, this.level ].forEach(item => item.update(this))
   }
 }
