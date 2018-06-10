@@ -5,9 +5,21 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script type="module" src="index.js"></script>
   <title>theRace</title>
+  <style>
+    body {
+      display: flex;           /* establish flex container */
+      flex-direction: column;  /* make main axis vertical */
+      justify-content: center; /* center items vertically, in this case */
+      align-items: center;     /* center items horizontally, in this case */
+    }
+
+    #game01 {
+      border: 5px solid #222;
+    }
+
+  </style>
 </head>
 <body>
-  <the-race-game width="500px" height="500px"></the-race-game>
-  <p is="word-count">sdfsdf</p>
+  <the-race-router/>
 </body>
 </html>

@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "browser-sync start --watch src/* --server src/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "server": "cd ./src/vendor/WebSocketBroadcastServer/ && php ./broadcastServer.php",
+    "eslint": "eslint src/lib/**/*.js",
+    "test": "npm run eslint"
   },
   "repository": {
     "type": "git",
@@ -19,5 +21,13 @@
   "homepage": "https://github.com/superbarne/theRace#readme",
   "dependencies": {
     "browser-sync": "^2.24.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0"
   }
 }

@@ -1,6 +1,6 @@
 import { Socket } from './Socket.js'
 
-export class KeyboardControl {
+export class SocketControl {
   constructor (mapping, entity) {
     this.entity = entity
     this.controls = {
@@ -10,20 +10,7 @@ export class KeyboardControl {
       right: false
     }
 
-    const setControl = (key, val) => {
-      let control = mapping[key]
-      if (control) this.controls[control] = val
-    }
-
-    document.addEventListener('keydown', e => setControl(e.which, true))
-    document.addEventListener('keyup', e => {
-      setControl(e.which, false)
-      if (e.which === 67) entity.placeBarrel()
-      if (e.which === 88) entity.placeBarricade()
-    })
-
     this.socket = new Socket()
-    /*
     this.socket.on('orientation', ({ beta, gamma }) => {
       this.controls.right = false
       this.controls.left = false
@@ -34,7 +21,6 @@ export class KeyboardControl {
       if (gamma > -45) this.controls.accelerate = true
       if (gamma < 45) this.controls.decelerate = true
     })
-    */
   }
 
   update () {
