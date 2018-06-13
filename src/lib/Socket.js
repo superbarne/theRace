@@ -16,7 +16,7 @@ export class Socket extends EventEmitter {
     /**
      * WEbsocket Verbindung
      **/
-    this.ws = new window.WebSocket('ws://192.168.10.223:8080')
+    this.ws = new window.WebSocket('ws://192.168.0.19:8080')
 
     this.sockets = {}
 

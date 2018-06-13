@@ -1,8 +1,10 @@
 import { Socket } from './Socket.js'
 
 export class Gamepad extends window.HTMLElement {
-  constructor () {
+  constructor ({ gameId, playerName }) {
     super()
+    this.gameId = gameId
+    this.playerName = playerName
     this.shadow = this.attachShadow({mode: 'open'})
     const template = document.createRange().createContextualFragment(`
       <style>
@@ -23,6 +25,21 @@ export class Gamepad extends window.HTMLElement {
   }
 
   handleOrientation ({ beta, gamma }) {
-    this.socket.broadcast('orientation', { beta, gamma })
+    const controls = {
+      right: false,
+      left: false,
+      accelerate: false,
+      decelerate: false
+    }
+    if (beta > 25) controls.right = true
+    if (beta < -25) controls.left = true
+    if (gamma > -45) controls.accelerate = true
+    if (gamma < 45) controls.decelerate = true
+    const data = {
+      c: controls,
+      g: this.gameId,
+      p: this.playerName
+    }
+    this.socket.broadcast('controls', { data: data })
   }
 }

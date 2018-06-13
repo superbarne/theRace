@@ -6,7 +6,7 @@ export class EntityBarrel extends Entity {
     ctx.lineWidth = 3
     ctx.beginPath()
     ctx.arc(0, 0, 15, 0, 2 * Math.PI)
-    ctx.fillStyle = '#FFFF00'
+    ctx.fillStyle = '#fff'
     ctx.fill()
     ctx.stroke()
     ctx.restore()

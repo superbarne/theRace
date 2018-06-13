@@ -1,5 +1,3 @@
-import { Socket } from './Socket.js'
-
 export class Login extends window.HTMLElement {
   constructor () {
     super()
@@ -13,27 +11,38 @@ export class Login extends window.HTMLElement {
         }
     
         input, button {
+          margin-bottom:7px;
           display: block;
           width: 100%;
           text-align: center;
           box-sizing: border-box;
-          background-color: #282828;
-          border: 1px solid #181818;
+          background-color:#fff;
+          border:none;
           padding: 15px;
-          color: #8b8b8b;
+          color: #000;
+        }
+        button {
+          
+          border-bottom: 7px solid #f890e7;
+        }
+        button:hover {
+          background-color:#0bd3d3;
+        }
+
+        p {
+          text-align:center;
         }
     
         a {
-          color: #1ed660;
+          color: #000;
           text-decoration: none;
         }
       </style>
       <div class="container">
           <input id="username" type="text" placeholder="Benutzername">
-/bu
           <input id="password" type="password" placeholder="passwort">
 
-          <button>Anmelden<tton>
+          <button>Anmelden</button>
           <p>
               Jetzt <a href="#/register">Registrieren</a>
           </p>
@@ -41,7 +50,6 @@ export class Login extends window.HTMLElement {
     `)
     this.shadow.appendChild(document.importNode(template, true))
     this.shadow.querySelector('button').addEventListener('click', () => this.login()) // wenn auf Login gedrückt wird
-    this.socket = new Socket()
   }
 
   login () {
@@ -52,7 +60,6 @@ export class Login extends window.HTMLElement {
 
     if (data[`${username}:${password}`]) { // überprüft die Nutzerdaten, der key wird in user:pass format hinterlegt
       window.localStorage.setItem('me', `${username}:${password}`)
-      this.socket.broadcast('info') // anmeldung wird bekanntgegeben
       window.location.href = '#/game' // stations auflistung weiterleiten
     } else {
       window.alert('Falsch') // Fehlermeldung bie faslcheingabe

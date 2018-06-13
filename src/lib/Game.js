@@ -3,16 +3,16 @@ import { Map } from './Map.js'
 import { KeyboardControl } from './KeyboardControl.js'
 import { Socket } from './Socket.js'
 import { Level } from './Level.js'
+import { PlayerCanvas } from './PlayerCanvas.js'
+import { EntityStart } from './EntityStart.js';
+import { EntityCheckpoint } from './EntityCheckpoint.js';
 
 export class Game extends window.HTMLElement {
-  constructor () {
+  constructor ({ gameId }) {
     super()
-    this.canvas = document.createElement('canvas')
-    this.width = 800
-    this.height = 800
-    this.canvas.setAttribute('width', this.width)
-    this.canvas.setAttribute('height', this.height)
-    this.ctx = this.canvas.getContext('2d', { alpha: true }) // apha false for litte performance boost
+    this.gameId = gameId
+    this.width = 600
+    this.height = 600
     this.socket = new Socket()
     this.level = new Level(this)
 
@@ -22,62 +22,84 @@ export class Game extends window.HTMLElement {
 
     this.initEntities()
 
+    this.playerCanvas = [
+      new PlayerCanvas(this, this.followEntity[0], 'Player01'),
+      new PlayerCanvas(this, this.followEntity[1], 'Player02')
+    ]
+
     this.controls = [
       new KeyboardControl({
         87: 'accelerate',
         83: 'decelerate',
         65: 'left',
         68: 'right'
-      }, this.ownEntity)
+      }, this.followEntity[0], this.playerCanvas[0]),
+      new KeyboardControl({
+        38: 'accelerate',
+        40: 'decelerate',
+        37: 'left',
+        39: 'right'
+      }, this.followEntity[1], this.playerCanvas[1])
     ]
 
-    this.viewport = {
-      x: 0,
-      y: 0
-    }
-
-    this.appendChild(this.canvas)
+    this.playerCanvas.forEach(({canvas}) => this.appendChild(canvas))
+    this.classList.add('gameholder')
     window.requestAnimationFrame(() => this.render())
   }
 
   initEntities () {
-    let test = new EntityCar(
-      this.canvas.width / 2,
-      this.canvas.height / 2,
-      0,
-      this
-    )
+    let test = [
+      new EntityCar(
+        515,
+        187,
+        0,
+        this
+      ),
+      new EntityCar(
+        515,
+        280,
+        0,
+        this
+      )
+    ]
 
     this.entities = [
-      test
+      new EntityStart(505, 115, 0, this, 250),
+      new EntityCheckpoint(624, 710, 0, this, 150),
+      ...test
     ]
 
     this.followEntity = test
-    this.ownEntity = test
   }
 
   render () {
-    const { ctx, canvas } = this
     this.udpate()
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    this.map.render(this)
-    this.entities.forEach(entity => entity.render(this))
-    this.level.render(this)
+    this.playerCanvas.forEach(playerCanvas => playerCanvas.render())
     window.requestAnimationFrame(() => this.render())
   }
 
   udpate () {
-    const { viewport, followEntity, canvas, map, entities, controls } = this
+    this.playerCanvas.forEach(playerCanvas => playerCanvas.update());
+    [ ...this.entities, ...this.controls, this.level ].forEach(item => item.update(this))
+  }
 
-    const boundries = (n, lo, hi) => n < lo ? lo : n > hi ? hi : n
-    viewport.x = boundries(
-      -followEntity.x + this.width / 2,
-      canvas.width - map.width, 0
-    )
-    viewport.y = boundries(
-      -followEntity.y + this.height / 2,
-      canvas.height - map.height, 0
-    );
-    [ ...entities, ...controls, this.level ].forEach(item => item.update(this))
+  finish () {
+    const finished = this.playerCanvas.some(playerCanvas => !playerCanvas.timeEnd)
+    let highscore = JSON.parse(window.localStorage.getItem('highscore') || '[]')
+    const data = JSON.parse(window.localStorage.getItem('userdata') || '{}')
+    const me = window.localStorage.getItem('me')
+    if (!finished) {
+      console.log('END')
+      this.playerCanvas.forEach(playerCanvas =>
+        highscore.push({
+          time: playerCanvas.timeEnd - playerCanvas.timeStart,
+          user: data[me].name,
+          player: playerCanvas.name
+        })
+      )
+      window.localStorage.setItem('highscore', JSON.stringify(highscore)) // speicher und bekanntgeben
+      window.location.href = '#/highscore' // nach spielende auf highscore weiterleiten
+
+    }
   }
 }

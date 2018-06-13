@@ -5,7 +5,7 @@ export class EntityBarricade extends Entity {
     const size = 20
     const length = 150
     super.render(...arguments)
-    ctx.fillStyle = '#FF0000'
+    ctx.fillStyle = '#fff'
     ctx.fillRect(
       size / -2,
       size / -2,

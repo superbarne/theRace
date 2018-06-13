@@ -1,7 +1,7 @@
 import { Socket } from './Socket.js'
 
 export class KeyboardControl {
-  constructor (mapping, entity) {
+  constructor (mapping, entity, playerCanvas) {
     this.entity = entity
     this.controls = {
       accelerate: false,
@@ -20,22 +20,19 @@ export class KeyboardControl {
       setControl(e.which, false)
       if (e.which === 67) entity.placeBarrel()
       if (e.which === 88) entity.placeBarricade()
-      if (e.which === 80) entity.game.level.polylines.unshift([entity.x, entity.y])
+      if (e.which === 80) {
+        entity.game.level.polylines[1].unshift([entity.x, entity.y])
+        console.log(JSON.stringify(entity.game.level.polylines[1]))
+      }
     })
 
     this.socket = new Socket()
-    /*
-    this.socket.on('orientation', ({ beta, gamma }) => {
-      this.controls.right = false
-      this.controls.left = false
-      this.controls.accelerate = false
-      this.controls.decelerate = false
-      if (beta > 25) this.controls.right = true
-      if (beta < -25) this.controls.left = true
-      if (gamma > -45) this.controls.accelerate = true
-      if (gamma < 45) this.controls.decelerate = true
+    
+    this.socket.on('controls', ({data}) => {
+      if (playerCanvas.name !== data.p || playerCanvas.game.gameId !== data.g) return
+      this.controls = data.c
     })
-    */
+    
   }
 
   update () {

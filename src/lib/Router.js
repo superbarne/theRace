@@ -2,15 +2,19 @@ import { Login } from './Login.js'
 import { Register } from './Register.js'
 import { Game } from './Game.js'
 import { Gamepad } from './Gamepad.js'
+import { Highscore } from './Highscore.js';
+import { PreGame } from './PreGame.js';
 
 export class Router extends window.HTMLElement {
   constructor () {
     super()
     this.routes = { // routen auf CustomeElements mappen
-      '/game': Game,
+      '/game/:gameId/:level': Game,
+      '/game': PreGame,
       '/login': Login,
       '/register': Register,
-      '/gamepad': Gamepad
+      '/highscore': Highscore,
+      '/gamepad/:gameId/:playerName': Gamepad
     }
     this.params = {}
   }

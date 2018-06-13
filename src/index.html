@@ -3,18 +3,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="vendor/qrcode.js"></script>
   <script type="module" src="index.js"></script>
   <title>theRace</title>
   <style>
     body {
+      font-family: Arial;
       display: flex;           /* establish flex container */
       flex-direction: column;  /* make main axis vertical */
       justify-content: center; /* center items vertically, in this case */
       align-items: center;     /* center items horizontally, in this case */
     }
 
-    #game01 {
-      border: 5px solid #222;
+    .gameholder canvas {
+      border: 10px solid #f890e7;
+    }
+    .gameholder canvas:first-child {
+      border-right: none;
     }
 
   </style>

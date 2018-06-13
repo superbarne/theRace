@@ -102,7 +102,7 @@ $Server->bind('close', 'wsOnClose');
 // for other computers to connect, you will probably need to change this to your LAN IP or external IP,
 // alternatively use: gethostbyaddr(gethostbyname($_SERVER['SERVER_NAME']))
 
-$meineServerURL = "192.168.10.223";
+$meineServerURL = "192.168.0.19";
 $meinServerPort = 8080;
 
 

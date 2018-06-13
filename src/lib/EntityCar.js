@@ -15,17 +15,17 @@ export class EntityCar extends Entity {
     this.friction = 0.9
     this.rotationSpeed = 0.005
     this.size = 20
-    this.collisionMap = [[[0,0], [this.size*2, 0]]]
+    this.collisionMap = [[[0, 0], [this.size / 1.2, 0]]]
   }
   render ({ viewport, ctx }) {
     super.render(...arguments)
-    ctx.strokeStyle = 'blue'
+    ctx.strokeStyle = '#f890e7'
     ctx.lineWidth = 3
     ctx.beginPath()
     ctx.moveTo(0, 0)
     ctx.lineTo(this.size / 1.2, 0)
     ctx.stroke()
-    ctx.fillStyle = this.color
+    ctx.fillStyle = '#fff'
     ctx.fillRect(
       this.size / -2,
       this.size / -2,
@@ -43,15 +43,18 @@ export class EntityCar extends Entity {
 
   update () {
     super.update(...arguments)
-    if(this.colides) {
-      this.vx = 0
-      this.vy = 0
-    }
     this.angle += this.rv // * (this.ax * this.ay)
     this.vx += this.ax
     this.vy += this.ay
-    this.x += this.vx * Math.cos(this.angle)
-    this.y += this.vy * Math.sin(this.angle)
+    if (this.game.level.collides(this, {
+      x: this.x + this.vx * Math.cos(this.angle),
+      y: this.y + this.vy * Math.sin(this.angle)
+    })) {
+      // console.log('collides')
+    } else {
+      this.x += this.vx * Math.cos(this.angle)
+      this.y += this.vy * Math.sin(this.angle)
+    }
     this.ax *= this.friction
     this.ay *= this.friction
     this.vx *= this.friction
