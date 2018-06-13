@@ -4,7 +4,7 @@ theRace.Router = class extends window.HTMLElement {
   constructor () {
     super()
     this.routes = { // routen auf CustomeElements mappen
-      '/game/:gameId/:level': theRace.Game,
+      '/game/:level/:gameId': theRace.Game,
       '/game': theRace.PreGame,
       '/login': theRace.Login,
       '/register': theRace.Register,

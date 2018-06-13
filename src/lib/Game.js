@@ -1,12 +1,12 @@
 'use strict'
 
 theRace.Game = class extends window.HTMLElement {
-  constructor ({ gameId }) {
+  constructor ({ gameId, level }) {
     super()
     this.gameId = gameId
     this.width = 600
     this.height = 600
-    this.level = new theRace.Level(this)
+    this.level = new theRace.Level(this, level)
     this.map = new theRace.Map(2000, 2000)
 
     this.initEntities()

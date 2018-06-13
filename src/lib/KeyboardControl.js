@@ -19,13 +19,7 @@ theRace.KeyboardControl = class {
     }
 
     document.addEventListener('keydown', e => setControl(e.which, true))
-    document.addEventListener('keyup', e => {
-      setControl(e.which, false)
-      if (e.which === 80) {
-        entity.game.level.polylines[1].unshift([entity.x, entity.y])
-        console.log(JSON.stringify(entity.game.level.polylines[1]))
-      }
-    })
+    document.addEventListener('keyup', e => setControl(e.which, false))
 
     this.socket = new theRace.Socket()
 

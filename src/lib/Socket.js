@@ -16,7 +16,7 @@ theRace.Socket = class extends theRace.EventEmitter {
     /**
      * WEbsocket Verbindung
      **/
-    this.ws = new window.WebSocket('ws://192.168.0.19:8080')
+    this.ws = new window.WebSocket('ws://borsti.inf.fh-flensburg.de:8080')
 
     this.sockets = {}
 

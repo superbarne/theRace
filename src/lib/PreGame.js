@@ -37,8 +37,7 @@ theRace.PreGame = class extends window.HTMLElement {
         <h1>theRace</h1>
         <nav>
           <a href="#/game/01/${Math.round(Math.random() * 100)}">Level 01</a>
-          <a href="#/game/01/${Math.round(Math.random() * 100)}">Level 02</a>
-          <a href="#/game/01/${Math.round(Math.random() * 100)}">Level 03</a>
+          <a href="#/game/02/${Math.round(Math.random() * 100)}">Level 02</a>
         </nav>
       </div>
     `)
