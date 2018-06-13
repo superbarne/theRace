@@ -1,3 +1,5 @@
+'use strict'
+
 theRace.Login = class extends window.HTMLElement {
   constructor () {
     super()

@@ -1,3 +1,5 @@
+'use strict'
+
 theRace.Router = class extends window.HTMLElement {
   constructor () {
     super()

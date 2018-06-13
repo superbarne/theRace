@@ -1,3 +1,5 @@
+'use strict'
+
 theRace.Gamepad = class extends window.HTMLElement {
   constructor ({ gameId, playerName }) {
     super()
@@ -19,7 +21,7 @@ theRace.Gamepad = class extends window.HTMLElement {
     this.shadow.appendChild(document.importNode(template, true))
     this.socket = new Socket()
 
-    window.addEventListener('deviceorientation', e => this.handleOrientation(e), true)
+    window.addEventListener('deviceorientation', e => this.handleOrientation(e), true) // bei änderungen der Orientierung
   }
 
   handleOrientation ({ beta, gamma }) {
@@ -29,15 +31,16 @@ theRace.Gamepad = class extends window.HTMLElement {
       accelerate: false,
       decelerate: false
     }
+    // bei entsprechender Ausrichtung werden die controls auf true gesetzt
     if (beta > 25) controls.right = true
     if (beta < -25) controls.left = true
     if (gamma > -45) controls.accelerate = true
     if (gamma < 45) controls.decelerate = true
     const data = {
-      c: controls,
+      c: controls, // die kurzen variablen namen wurden gewählt, weil der server nur eine bestimmte nachrichtenlänge nimmt
       g: this.gameId,
       p: this.playerName
     }
-    this.socket.broadcast('controls', { data: data })
+    this.socket.broadcast('controls', { data: data }) // und hier an den broadcastServer gesendet
   }
 }

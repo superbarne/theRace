@@ -1,3 +1,5 @@
+'use strict'
+
 theRace.Highscore = class extends window.HTMLElement {
   constructor ({ gameId, playerName }) {
     super()
@@ -46,9 +48,9 @@ theRace.Highscore = class extends window.HTMLElement {
     `)
     this.shadow.appendChild(document.importNode(template, true))
     const highscoreElement = this.shadow.querySelector('#highscore')
-    const highscore = JSON.parse(window.localStorage.getItem('highscore') || '[]')
-    highscore.sort((a, b) => a.time > b.time).forEach(item => {
-      let score = document.createElement('div')
+    const highscore = JSON.parse(window.localStorage.getItem('highscore') || '[]') // Highscore aus dem localStorage laden mit einem leeren Array als Fallback
+    highscore.sort((a, b) => a.time > b.time).forEach(item => { // sortieren kleinste zeit nach oben und drüber itterieen
+      let score = document.createElement('div') // element erstellen und untereinander auflisten
       score.innerHTML = `${Math.round(item.time / 10) / 100}s // ${item.user}  // ${item.player}`
       highscoreElement.appendChild(score)
     })

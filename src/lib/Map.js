@@ -1,3 +1,4 @@
+'use strict'
 
 theRace.Map = class {
   constructor (width, height) {
@@ -5,7 +6,7 @@ theRace.Map = class {
     this.height = height
   }
 
-  render ({ viewport, ctx }) {
+  render ({ viewport, ctx }) { // Zeichnet einfach ein schachbrettmuster
     for (let i = 0; i < this.height; i += 50) {
       for (let j = 0; j < this.width; j += 50) {
         if ((i / 50 + j / 50) & 1) {

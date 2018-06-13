@@ -1,3 +1,5 @@
+'use strict'
+
 theRace.Register = class extends window.HTMLElement {
   constructor () {
     super()

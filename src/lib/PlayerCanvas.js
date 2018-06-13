@@ -1,18 +1,21 @@
+'use strict'
+
 theRace.PlayerCanvas = class {
   constructor (game, followEntity, name) {
     this.name = name
     this.game = game
     this.followEntity = followEntity
-    this.canvas = document.createElement('canvas')
-    this.ctx = this.canvas.getContext('2d', { alpha: true }) // apha false for litte performance boost
+    this.canvas = document.createElement('canvas') // pro player wird ein Canvas erstellt
+    this.ctx = this.canvas.getContext('2d', { alpha: true })
     this.canvas.setAttribute('width', game.width)
     this.canvas.setAttribute('height', game.height)
-    this.timeStart = new Date()
+    this.timeStart = new Date() // Zeiten des spielers
     this.timeEnd = null
     this.viewport = {
       x: 0,
       y: 0
     }
+
 
     this.qr = qrcode(4, 'L')
     this.qr.addData(`${location.origin}/#/gamepad/${this.game.gameId}/${this.name}`)
@@ -33,7 +36,9 @@ theRace.PlayerCanvas = class {
   }
 
   update () {
-    const boundries = (n, lo, hi) => n < lo ? lo : n > hi ? hi : n
+    // es wird überprüft ob die nummer noch in einem vordefinierten bereich liegt und falls nicht diesen Bereich nicht verlässt
+    const boundries = (n, low, high) => n < low ? low : n > high ? high : n
+    // der viewport wird neu berechnet
     this.viewport.x = boundries(
       -this.followEntity.x + this.game.width / 2,
       this.canvas.width - this.game.map.width, 0

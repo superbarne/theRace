@@ -1,24 +1,22 @@
+'use strict'
+
 theRace.Game = class extends window.HTMLElement {
   constructor ({ gameId }) {
     super()
     this.gameId = gameId
     this.width = 600
     this.height = 600
-    this.socket = new theRace.Socket()
     this.level = new theRace.Level(this)
-
-    this.socket.on('info', () => console.log(this.socket))
-
     this.map = new theRace.Map(2000, 2000)
 
     this.initEntities()
 
-    this.playerCanvas = [
+    this.playerCanvas = [ // spieler werden Instanziert
       new theRace.PlayerCanvas(this, this.followEntity[0], 'Player01'),
       new theRace.PlayerCanvas(this, this.followEntity[1], 'Player02')
     ]
 
-    this.controls = [
+    this.controls = [ // die Keyboardbindings werden festgelegt und den Spielern und enteties zugeordnet
       new theRace.KeyboardControl({
         87: 'accelerate',
         83: 'decelerate',
@@ -33,7 +31,7 @@ theRace.Game = class extends window.HTMLElement {
       }, this.followEntity[1], this.playerCanvas[1])
     ]
 
-    this.playerCanvas.forEach(({canvas}) => this.appendChild(canvas))
+    this.playerCanvas.forEach(({canvas}) => this.appendChild(canvas)) // die beiden Speielr canvas werden dem Element hinzugefügt
     this.classList.add('gameholder')
     window.requestAnimationFrame(() => this.render())
   }
@@ -74,7 +72,7 @@ theRace.Game = class extends window.HTMLElement {
     [ ...this.entities, ...this.controls, this.level ].forEach(item => item.update(this))
   }
 
-  finish () {
+  finish () { // wenn beide Speielr fertig sind wird deren Zeit in den Highscore geschrieben und der Nutzer zum highscore geleitet
     const notFinished = this.playerCanvas.some(playerCanvas => !playerCanvas.timeEnd)
     let highscore = JSON.parse(window.localStorage.getItem('highscore') || '[]')
     const data = JSON.parse(window.localStorage.getItem('userdata') || '{}')

@@ -1,3 +1,8 @@
+'use strict'
+
+/**
+ * Diese Klasse wird für jeden Spieler Instanziert und steuert immer ein Entity. Es wird ein Keyboard mapping übergeben für die Navigation.
+ */
 theRace.KeyboardControl = class {
   constructor (mapping, entity, playerCanvas) {
     this.entity = entity
@@ -8,7 +13,7 @@ theRace.KeyboardControl = class {
       right: false
     }
 
-    const setControl = (key, val) => {
+    const setControl = (key, val) => { // eine kleine Helper Funktion um das mapping zu bedienen
       let control = mapping[key]
       if (control) this.controls[control] = val
     }
@@ -23,15 +28,15 @@ theRace.KeyboardControl = class {
     })
 
     this.socket = new theRace.Socket()
-    
-    this.socket.on('controls', ({data}) => {
-      if (playerCanvas.name !== data.p || playerCanvas.game.gameId !== data.g) return
+
+    this.socket.on('controls', ({data}) => { // wenn ein smarphone verbunden ist werden hier auch controls gehorcht
+      if (playerCanvas.name !== data.p || playerCanvas.game.gameId !== data.g) return // faslche spieler oder spiele werden rausgefilter
       this.controls = data.c
     })
-    
+
   }
 
-  update () {
+  update () { // bei jedem update cycle werden die angeschlagnen tasten in aktion umgesetzt
     const { controls, entity } = this
     if (controls.accelerate) entity.accelerate()
     if (controls.decelerate) entity.decelerate()

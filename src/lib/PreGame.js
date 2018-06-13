@@ -1,3 +1,5 @@
+'use strict'
+
 theRace.PreGame = class extends window.HTMLElement {
   constructor ({ gameId, playerName }) {
     super()

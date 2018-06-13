@@ -1,3 +1,5 @@
+'use strict'
+
 let socketInstance = null
 
 theRace.Socket = class extends theRace.EventEmitter {

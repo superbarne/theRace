@@ -1,3 +1,5 @@
+'use strict'
+
 theRace.EventEmitter = class {
   constructor () {
     this.listener = []
