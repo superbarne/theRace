@@ -1,8 +1,4 @@
-import { Entity } from './Entity.js'
-import { EntityBarrel } from './EntityBarrel.js'
-import { EntityBarricade } from './EntityBarricade.js'
-
-export class EntityCar extends Entity {
+theRace.EntityCar = class extends theRace.Entity {
   constructor () {
     super(...arguments)
     this.vx = 0
@@ -78,29 +74,5 @@ export class EntityCar extends Entity {
 
   right () {
     this.rv += this.rotationSpeed
-  }
-
-  placeBarrel () {
-    this.game.entities.push(new EntityBarrel(
-      this.x,
-      this.y,
-      this.angle, 20,
-      this
-    ))
-  }
-
-  placeBarricade () {
-    this.game.entities.push(new EntityBarricade(
-      this.x,
-      this.y,
-      this.angle, 20,
-      this
-    ))
-    console.log('barrels: ', JSON.stringify(this.game.entities.map(item => ({
-      type: item.constructor.name,
-      x: item.x,
-      y: item.y,
-      angle: item.angle
-    }))))
   }
 }

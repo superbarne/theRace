@@ -1,6 +1,4 @@
-import { Socket } from './Socket.js'
-
-export class KeyboardControl {
+theRace.KeyboardControl = class {
   constructor (mapping, entity, playerCanvas) {
     this.entity = entity
     this.controls = {
@@ -18,15 +16,13 @@ export class KeyboardControl {
     document.addEventListener('keydown', e => setControl(e.which, true))
     document.addEventListener('keyup', e => {
       setControl(e.which, false)
-      if (e.which === 67) entity.placeBarrel()
-      if (e.which === 88) entity.placeBarricade()
       if (e.which === 80) {
         entity.game.level.polylines[1].unshift([entity.x, entity.y])
         console.log(JSON.stringify(entity.game.level.polylines[1]))
       }
     })
 
-    this.socket = new Socket()
+    this.socket = new theRace.Socket()
     
     this.socket.on('controls', ({data}) => {
       if (playerCanvas.name !== data.p || playerCanvas.game.gameId !== data.g) return

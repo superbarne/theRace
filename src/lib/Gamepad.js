@@ -1,6 +1,4 @@
-import { Socket } from './Socket.js'
-
-export class Gamepad extends window.HTMLElement {
+theRace.Gamepad = class extends window.HTMLElement {
   constructor ({ gameId, playerName }) {
     super()
     this.gameId = gameId

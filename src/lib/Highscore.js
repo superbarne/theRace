@@ -1,6 +1,4 @@
-import { Socket } from './Socket.js'
-
-export class Highscore extends window.HTMLElement {
+theRace.Highscore = class extends window.HTMLElement {
   constructor ({ gameId, playerName }) {
     super()
     this.gameId = gameId

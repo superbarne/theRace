@@ -1,4 +1,4 @@
-export class EventEmitter {
+theRace.EventEmitter = class {
   constructor () {
     this.listener = []
     this.listenerFunc = []

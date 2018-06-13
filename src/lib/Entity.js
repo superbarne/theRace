@@ -1,6 +1,6 @@
 'use strict'
 
-export class Entity {
+theRace.Entity = class {
   constructor (x, y, angle, game) {
     this.x = x
     this.y = y

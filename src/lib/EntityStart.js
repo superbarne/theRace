@@ -1,6 +1,4 @@
-import { Entity } from './Entity.js'
-
-export class EntityStart extends Entity {
+theRace.EntityStart = class extends theRace.Entity {
   constructor (x, y, angle, game, length) {
     super(x, y, angle, game)
     this.length = length

@@ -1,4 +1,4 @@
-export class PreGame extends window.HTMLElement {
+theRace.PreGame = class extends window.HTMLElement {
   constructor ({ gameId, playerName }) {
     super()
     this.gameId = gameId

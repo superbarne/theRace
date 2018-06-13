@@ -1,4 +1,4 @@
-export class Login extends window.HTMLElement {
+theRace.Login = class extends window.HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({mode: 'open'})

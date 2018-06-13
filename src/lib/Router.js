@@ -1,20 +1,13 @@
-import { Login } from './Login.js'
-import { Register } from './Register.js'
-import { Game } from './Game.js'
-import { Gamepad } from './Gamepad.js'
-import { Highscore } from './Highscore.js';
-import { PreGame } from './PreGame.js';
-
-export class Router extends window.HTMLElement {
+theRace.Router = class extends window.HTMLElement {
   constructor () {
     super()
     this.routes = { // routen auf CustomeElements mappen
-      '/game/:gameId/:level': Game,
-      '/game': PreGame,
-      '/login': Login,
-      '/register': Register,
-      '/highscore': Highscore,
-      '/gamepad/:gameId/:playerName': Gamepad
+      '/game/:gameId/:level': theRace.Game,
+      '/game': theRace.PreGame,
+      '/login': theRace.Login,
+      '/register': theRace.Register,
+      '/highscore': theRace.Highscore,
+      '/gamepad/:gameId/:playerName': theRace.Gamepad
     }
     this.params = {}
   }
@@ -54,7 +47,6 @@ export class Router extends window.HTMLElement {
     // wenn man nicht eingelogt ist nur login und register
     const hash = window.location.hash.replace('#', '')
     const Element = this.routes[hash] || this.getRoute(hash) // Route in Element auflösen
-    console.log(Element)
     if (Element) {
       this.innerHTML = ''
       this.appendChild(new Element(this.params)) // Element ersetzen

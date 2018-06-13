@@ -1,8 +1,6 @@
-import { EventEmitter } from './EventEmitter.js'
-
 let socketInstance = null
 
-export class Socket extends EventEmitter {
+theRace.Socket = class extends theRace.EventEmitter {
   constructor () {
     if (socketInstance) return socketInstance // Socket Klasse nur einal instanzieren (Singleton);
     super()

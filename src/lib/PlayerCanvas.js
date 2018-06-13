@@ -1,4 +1,4 @@
-export class PlayerCanvas {
+theRace.PlayerCanvas = class {
   constructor (game, followEntity, name) {
     this.name = name
     this.game = game
@@ -13,8 +13,6 @@ export class PlayerCanvas {
       x: 0,
       y: 0
     }
-
-    console.log()
 
     this.qr = qrcode(4, 'L')
     this.qr.addData(`${location.origin}/#/gamepad/${this.game.gameId}/${this.name}`)

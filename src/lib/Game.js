@@ -1,40 +1,31 @@
-import { EntityCar } from './EntityCar.js'
-import { Map } from './Map.js'
-import { KeyboardControl } from './KeyboardControl.js'
-import { Socket } from './Socket.js'
-import { Level } from './Level.js'
-import { PlayerCanvas } from './PlayerCanvas.js'
-import { EntityStart } from './EntityStart.js';
-import { EntityCheckpoint } from './EntityCheckpoint.js';
-
-export class Game extends window.HTMLElement {
+theRace.Game = class extends window.HTMLElement {
   constructor ({ gameId }) {
     super()
     this.gameId = gameId
     this.width = 600
     this.height = 600
-    this.socket = new Socket()
-    this.level = new Level(this)
+    this.socket = new theRace.Socket()
+    this.level = new theRace.Level(this)
 
     this.socket.on('info', () => console.log(this.socket))
 
-    this.map = new Map(2000, 2000)
+    this.map = new theRace.Map(2000, 2000)
 
     this.initEntities()
 
     this.playerCanvas = [
-      new PlayerCanvas(this, this.followEntity[0], 'Player01'),
-      new PlayerCanvas(this, this.followEntity[1], 'Player02')
+      new theRace.PlayerCanvas(this, this.followEntity[0], 'Player01'),
+      new theRace.PlayerCanvas(this, this.followEntity[1], 'Player02')
     ]
 
     this.controls = [
-      new KeyboardControl({
+      new theRace.KeyboardControl({
         87: 'accelerate',
         83: 'decelerate',
         65: 'left',
         68: 'right'
       }, this.followEntity[0], this.playerCanvas[0]),
-      new KeyboardControl({
+      new theRace.KeyboardControl({
         38: 'accelerate',
         40: 'decelerate',
         37: 'left',
@@ -49,13 +40,13 @@ export class Game extends window.HTMLElement {
 
   initEntities () {
     let test = [
-      new EntityCar(
+      new theRace.EntityCar(
         515,
         187,
         0,
         this
       ),
-      new EntityCar(
+      new theRace.EntityCar(
         515,
         280,
         0,
@@ -64,8 +55,8 @@ export class Game extends window.HTMLElement {
     ]
 
     this.entities = [
-      new EntityStart(505, 115, 0, this, 250),
-      new EntityCheckpoint(624, 710, 0, this, 150),
+      new theRace.EntityStart(505, 115, 0, this, 250),
+      new theRace.EntityCheckpoint(624, 710, 0, this, 150),
       ...test
     ]
 
@@ -84,11 +75,11 @@ export class Game extends window.HTMLElement {
   }
 
   finish () {
-    const finished = this.playerCanvas.some(playerCanvas => !playerCanvas.timeEnd)
+    const notFinished = this.playerCanvas.some(playerCanvas => !playerCanvas.timeEnd)
     let highscore = JSON.parse(window.localStorage.getItem('highscore') || '[]')
     const data = JSON.parse(window.localStorage.getItem('userdata') || '{}')
     const me = window.localStorage.getItem('me')
-    if (!finished) {
+    if (!notFinished) {
       console.log('END')
       this.playerCanvas.forEach(playerCanvas =>
         highscore.push({
